@@ -17,6 +17,7 @@
             this.initData();
             this.render();
 
+
         }
 
         initData() {
@@ -85,7 +86,7 @@
             }
 
         }
-
+        //dlaczego to dziadostwo nie działa??
         filterBooks() {
 
             for (let book of this.data) {
@@ -110,7 +111,7 @@
                 }
             }
         }
-
+        /////pasek czytalności
         determineRatingBgc(rating) {
 
             let background = '';

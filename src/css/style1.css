@@ -26,6 +26,10 @@ p {
     color: tomato;
 }
 
-element style {
-    width: 66%;
+.book__rating__fill {
+    width: 80%;
+    margin: 0 auto;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
 }
