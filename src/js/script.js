@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+
 {
 
     const templates = {
@@ -111,6 +112,8 @@
                 }
             }
         }
+
+
         /////pasek czytalności
         determineRatingBgc(rating) {
 
