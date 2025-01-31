@@ -2,6 +2,7 @@
 
 {
 
+
     const templates = {
         bookProduct: Handlebars.compile(document.querySelector('#template-book').innerHTML),
 
@@ -12,11 +13,19 @@
 
     class BooksList {
         constructor() {
+            this.initData();
+            this.getElements();
 
+
+            this.render();
+            this.initActions();
+
+            /*normalnie powino być: 
             this.getElements();
             this.initActions();
             this.initData();
             this.render();
+            */
 
 
         }
@@ -39,6 +48,7 @@
 
                 this.element = utils.createDOMFromHTML(generatedHTML);
 
+                //this.bookList.appendChild(this.element);
                 this.bookList.appendChild(this.element);
 
             }
@@ -48,11 +58,13 @@
         getElements() {
             this.bookList = document.querySelector('.books-list');
             this.filtersForms = document.querySelectorAll('.filters form label input');
+
         }
 
 
         initActions() {
             const thisActions = this;
+
             this.bookList.addEventListener('dblclick', function (event) {
 
                 if (!event.target.offsetParent.classList.contains('favorite')) {
@@ -69,25 +81,49 @@
                 }
 
             });
-            for (let filtersForm of this.filtersForms) {
-                filtersForm.addEventListener('click', function (event) {
 
+            this.filtersForm.addEventListener('click', function (event) {
+                event.preventDefault();// dodano event prevent
+                //doprecyzowałem filtrowanie
+                const filters = event.target.tagName == 'INPUT' &&
+                    event.target.name == 'filter' &&
+                    event.target.type == 'checkbox';
 
+                if (filters) {
                     if (event.target.checked) {
-
+                        //event.preventDefault();
+                        //event.target.value.add('adults');
                         filters.push(event.target.value);
                     }
                     else {
-                        filters.splice(filters.indexOf(event.target.value));
+                        const indexToRemove = filters.indexOf(event.target.value);
+                        filters.splice(indexToRemove, 1);
                     }
+                }
 
-                    thisActions.filterBooks();
-                });
-
-            }
+                thisActions.filterBooks();
+            });
 
         }
-        //dlaczego to dziadostwo nie działa??
+        //wersja alternatywna z modułu przy innej kolejnosci w konstruktorze:
+        /* 
+        
+        for(let filtersForm of this.filtersForms){
+        filtersForm.addEventListener('click', function(event){
+          
+          
+          if(event.target.checked){
+            
+            filters.push(event.target.value);
+          }
+          else{
+            filters.splice(filters.indexOf(event.target.value));
+          }
+        */
+
+
+
+        //filtrowanie zrobione wg modułu
         filterBooks() {
 
             for (let book of this.data) {
@@ -112,6 +148,7 @@
                 }
             }
         }
+
 
 
         /////pasek czytalności
@@ -149,3 +186,4 @@
     const app = new BooksList();
     app;
 }
+
